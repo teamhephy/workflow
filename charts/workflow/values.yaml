@@ -67,6 +67,12 @@ global:
   #
   # In case of CNI you can not use `hostPort` notation due to https://github.com/kubernetes/kubernetes/issues/23920
   # registry_proxy_bind_addr: "80"
+  # Clusters with large nodes (24 CPU+) may need to lower or tune the number of GUNICORN_WORKERS.
+  #
+  # Default value is based on your number of CPUs:
+  # - (os.cpu_count() or 4) * 4 + 1
+  # This setting probably should not be higher than max_connections which defaults to 100
+  # gunicorn_workers: 33
 
   # Enable usage of RBAC authorization mode
   #
