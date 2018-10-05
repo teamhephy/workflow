@@ -83,6 +83,8 @@ s3:
   secretkey: ""
   # Any S3 region
   region: "us-west-1"
+  # The S3 endpoint. Only needs to be set if you're not using AWS S3, leave it empty otherwise.
+  endpoint: ""
   # Your buckets.
   registry_bucket: "your-registry-bucket-name"
   database_bucket: "your-database-bucket-name"
