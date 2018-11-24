@@ -81,10 +81,15 @@ s3:
   accesskey: ""
   # Your AWS secret key. Leave it empty if you want to use IAM credentials.
   secretkey: ""
+  # Enable SSE encryption (this must be disabled if you are not using AWS S3),
+  # since SSE support in boto2 is AWS-specific, it may be necessary to disable it.
+  #
+  # Valid values are:
+  # - true: only the database bucket is encrypted, non-AWS installations will fail
+  # - false: in database, WALE_S3_SSE will be set to false, SSE is not requested
+  use_sse: "true"
   # Any S3 region
   region: "us-west-1"
-  # Using Server-Side Encryption ?
-  use_sse: "false"
   # Your buckets.
   registry_bucket: "your-registry-bucket-name"
   database_bucket: "your-database-bucket-name"
