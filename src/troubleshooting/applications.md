@@ -50,3 +50,8 @@ health checks to better suit the application's needs.
 [builder]: ../understanding-workflow/components.md#builder
 [healthchecks]: ../applications/managing-app-configuration.md#custom-health-checks
 [troubleshooting-kubectl]: kubectl.md
+
+## Application fails to connect to external services
+If the app is trying to connect to external services located in same region as the kubernetes such ie. off-cluster database, it might fail depending on how the kubernetes automatic firewall is implemented.
+
+In order to trobleshoot, google cloud GKE has this [guide](https://cloud.google.com/kubernetes-engine/docs/troubleshooting#autofirewall) covering the auto firewall rules.
