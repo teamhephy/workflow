@@ -64,7 +64,7 @@ Setting                                         | Description
 REGISTRATION_MODE                               | set registration to "enabled", "disabled", or "admin_only" (default: "admin_only")
 GUNICORN_WORKERS                                | number of [gunicorn][] workers spawned to process requests (default: CPU cores * 4 + 1)
 RESERVED_NAMES                                  | a comma-separated list of names which applications cannot reserve for routing (default: "deis, deis-builder, deis-workflow-manager")
-SLUGRUNNER_IMAGE_NAME                           | the image used to run buildpack application slugs (default: "quay.io/hephyci/slugrunner:canary")
+SLUGRUNNER_IMAGE_NAME                           | the image used to run buildpack application slugs (default: "hephy/slugrunner:v2.6.1")
 DEIS_DEPLOY_HOOK_URLS                           | a comma-separated list of URLs to send [deploy hooks][] to.
 DEIS_DEPLOY_HOOK_SECRET_KEY                     | a private key used to compute the HMAC signature for deploy hooks.
 DEIS_DEPLOY_REJECT_IF_PROCFILE_MISSING          | rejects a deploy if the previous build had a Procfile but the current deploy is missing it. A 409 is thrown in the API. Prevents accidental process types removal. (default: "false", allowed values: "true", "false")
