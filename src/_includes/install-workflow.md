@@ -10,22 +10,22 @@ Server: &version.Version{SemVer:"v2.5.0", GitCommit:"012cb0ac1a1b2f888144ef5a67b
 
 Ensure the `kubectl` client is installed and can connect to your Kubernetes cluster.
 
-## Add the Deis Chart Repository
+## Add the Hephy Chart Repository
 
-The Deis Chart Repository contains everything needed to install Deis Workflow onto a Kubernetes cluster, with a single `helm install deis/workflow --namespace deis` command.
+The Team Hephy Chart Repository contains everything needed to install Hephy Workflow onto a Kubernetes cluster, with a single `helm install hephy/workflow --namespace deis` command.
 
 Add this repository to Helm:
 
 ```
-$ helm repo add deis https://charts.deis.com/workflow
+$ helm repo add hephy https://charts.teamhephy.com/
 ```
 
-## Install Deis Workflow
+## Install Hephy Workflow
 
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace deis
+$ helm install hephy/workflow --namespace deis
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.
