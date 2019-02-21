@@ -29,7 +29,7 @@ If you are using AWS S3 and your Kubernetes nodes are configured with appropriat
 
 ### Step 3: Add Deis Repo
 
-If you haven't already added the Helm repo, do so with `helm repo add deis https://charts.deis.com/workflow`
+If you haven't already added the Helm repo, do so with `helm repo add hephy https://charts.teamhephy.com/`
 
 ### Step 4: Configure Workflow Chart
 

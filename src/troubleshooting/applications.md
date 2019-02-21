@@ -51,7 +51,12 @@ health checks to better suit the application's needs.
 [healthchecks]: ../applications/managing-app-configuration.md#custom-health-checks
 [troubleshooting-kubectl]: kubectl.md
 
-## Application fails to connect to external services
-If the app is trying to connect to external services located in same region as the kubernetes such ie. off-cluster database, it might fail depending on how the kubernetes automatic firewall is implemented.
+## Application or Workflow component fails to connect to external services
+If a Workflow pod is trying to connect to external services hosted in the cloud with the Kubernetes
+cluster, ie. off-cluster database, it might fail depending on the Kubernetes automatic firewall 
+configuration. Since Kubernetes 1.9.x, Google Cloud has implemented new Automatic Firewall rules.
 
-In order to trobleshoot, google cloud GKE has this [guide](https://cloud.google.com/kubernetes-engine/docs/troubleshooting#autofirewall) covering the auto firewall rules.
+In order to troubleshoot these issues with the automatic firewall, Google Cloud/GKE has provided
+this [guide][gke-autofirewall-guide] covering the auto firewall rules.
+
+[gke-autofirewall-guide]: https://cloud.google.com/kubernetes-engine/docs/troubleshooting#autofirewall

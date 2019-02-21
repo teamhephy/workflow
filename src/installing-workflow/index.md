@@ -1,13 +1,13 @@
-# Installing Deis Workflow
+# Installing Hephy Workflow
 
 This document is aimed at those who have already provisioned a [Kubernetes v1.3.4+][] cluster
-and want to install Deis Workflow. If help is required getting started with Kubernetes and
-Deis Workflow, follow the [quickstart guide](../quickstart/index.md) for assistance.
+and want to install Hephy Workflow. If help is required getting started with Kubernetes and
+Hephy Workflow, follow the [quickstart guide](../quickstart/index.md) for assistance.
 
 ## Prerequisites
 
 1. Verify the [Kubernetes system requirements](system-requirements.md)
-1. Install [Helm and Deis Workflow CLI](../quickstart/install-cli-tools.md) tools
+1. Install [Helm and Hephy Workflow CLI](../quickstart/install-cli-tools.md) tools
 
 ## Check Your Setup
 
@@ -36,7 +36,7 @@ If `helm` is already installed in cluster without sufficient rights, simply add 
 
 ## Choose Your Deployment Strategy
 
-Deis Workflow includes everything it needs to run out of the box. However, these defaults are aimed at simplicity rather than
+Hephy Workflow includes everything it needs to run out of the box. However, these defaults are aimed at simplicity rather than
 production readiness. Production and staging deployments of Workflow should, at a minimum, use off-cluster storage
 which is used by Workflow components to store and backup critical data. Should an operator need to completely re-install
 Workflow, the required components can recover from off-cluster storage. See the documentation for [configuring object
@@ -52,22 +52,22 @@ More rigorous installations would benefit from using outside sources for the fol
 
 Workflow now offers [experimental native ingress](experimental-native-ingress.md) to take advantage of native Kubernetes routing. Any compatible Kubernetes ingress controller can be used in place of Workflow's nginx-based deis-router. Follow [this guide](experimental-native-ingress.md) to enable experimental native ingress.
 
-## Add the Deis Chart Repository
+## Add the Hephy Chart Repository
 
-The Deis Chart Repository contains everything needed to install Deis Workflow onto a Kubernetes cluster, with a single `helm install deis/workflow --namespace deis` command.
+The Team Hephy Chart Repository contains everything needed to install Hephy Workflow onto a Kubernetes cluster, with a single `helm install hephy/workflow --namespace deis` command.
 
 Add this repository to Helm:
 
 ```
-$ helm repo add deis https://charts.deis.com/workflow
+$ helm repo add hephy https://charts.teamhephy.com/
 ```
 
-## Install Deis Workflow
+## Install Hephy Workflow
 
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace deis
+$ helm install hephy/workflow --namespace deis
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.
@@ -109,10 +109,10 @@ deis-router-2126433040-6sl6z             1/1       Running   0          4m
 deis-workflow-manager-2528409207-jkz2r   1/1       Running   0          4m
 ```
 
-Once all of the pods are in the `READY` state, Deis Workflow is up and running!
+Once all of the pods are in the `READY` state, Hephy Workflow is up and running!
 
 After installing Workflow, [register a user and deploy an application](../quickstart/deploy-an-app.md).
 
 [Kubernetes v1.3.4+]: system-requirements.md#kubernetes-versions
 [helm]: https://github.com/kubernetes/helm/blob/master/docs/install.md
-[valuesfile]: https://charts.deis.com/workflow/values-v2.17.0.yaml
+[valuesfile]: https://charts.teamhephy.com/workflow/values-v2.17.0.yaml

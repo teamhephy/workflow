@@ -1,4 +1,4 @@
-# Install Deis Workflow on Azure Container Service
+# Install Hephy Workflow on Azure Container Service
 
 ## Check Your Setup
 
@@ -17,14 +17,14 @@ helm init
 
 Ensure the `kubectl` client is installed and can connect to your Kubernetes cluster.
 
-## Add the Deis Chart Repository
+## Add the Hephy Chart Repository
 
-The Deis Chart Repository contains everything needed to install Deis Workflow onto a Kubernetes cluster, with a single `helm install deis/workflow --namespace deis` command.
+The Team Hephy Chart Repository contains everything needed to install Hephy Workflow onto a Kubernetes cluster, with a single `helm install hephy/workflow --namespace deis` command.
 
 Add this repository to Helm:
 
 ```
-$ helm repo add deis https://charts.deis.com/workflow
+$ helm repo add hephy https://charts.teamhephy.com/
 ```
 
 ## Create New Azure Storage Account
@@ -39,12 +39,12 @@ $ export AZURE_SA_KEY=`az storage account keys list -n $AZURE_SA_NAME -g $AZURE_
 
  > Note: Premium Storage skus are not supported yet due to [lack of block blob storage support](https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/using-blob-service-operations-with-azure-premium-storage) required for the deis database to function.
 
-## Install Deis Workflow
+## Install Hephy Workflow
 
 Now that Helm is installed and the repository has been added, install Workflow by running:
 
 ```
-$ helm install deis/workflow --namespace=deis --set global.storage=azure,azure.accountname=$AZURE_SA_NAME,azure.accountkey=$AZURE_SA_KEY,azure.registry_container=registry,azure.database_container=database,azure.builder_container=builder
+$ helm install hephy/workflow --namespace=deis --set global.storage=azure,azure.accountname=$AZURE_SA_NAME,azure.accountkey=$AZURE_SA_KEY,azure.registry_container=registry,azure.database_container=database,azure.builder_container=builder
 ```
 
 Helm will install a variety of Kubernetes resources in the `deis` namespace.
@@ -81,7 +81,7 @@ deis-router-k1ond             1/1       Running   0          5m
 deis-workflow-manager-68nu6   1/1       Running   0          5m
 ```
 
-Once all of the pods are in the `READY` state, Deis Workflow is up and running!
+Once all of the pods are in the `READY` state, Hephy Workflow is up and running!
 
 Next, [configure dns](dns.md) so you can register your first user and deploy an application.
 
