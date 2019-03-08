@@ -1,6 +1,7 @@
 
 |![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Hephy Workflow is the open source fork of Deis Workflow.<br />Please [read the announcement][] for more detail. |
 |---:|---|
+| 03/08/2019 | Hephy Workflow [v2.20.2][] patch release |
 | 02/14/2019 | Hephy Workflow [v2.20.1][] patch release |
 | 11/29/2018 | Hephy Workflow [v2.20.0][] new release|
 | 08/27/2018 | Team Hephy [blog][] comes online |
@@ -98,3 +99,4 @@ Then view the documentation on [http://localhost:8000](http://localhost:8000) or
 [v2.19.0]: https://gist.github.com/Cryptophobia/24c204583b18b9fc74c629fb2b62dfa3
 [v2.20.0]: https://gist.github.com/Cryptophobia/667cc30f42dc38d6784212eea00bfc58
 [v2.20.1]: https://gist.github.com/Cryptophobia/54b4d28f29c1f272fb892586a94f8223
+[v2.20.2]: https://gist.github.com/Cryptophobia/31f5cded1dc91719ea0c0a0d4a3d7ad7
