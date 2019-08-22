@@ -180,4 +180,4 @@ Workflow Manager's Deployment.
 [router-documentation]: https://github.com/teamhephy/router
 [router]: #router
 [using-buildpacks]: ../applications/using-buildpacks.md
-[using-dockerfiles]: ../applications/using-dockerfiles.md
+[using-dockerfiles]: ../applications/using-docker-files.md
