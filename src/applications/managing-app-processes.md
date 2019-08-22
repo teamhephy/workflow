@@ -253,7 +253,7 @@ the Pod to a new node.
 [container]: ../reference-guide/terms.md#container
 [process model]: https://devcenter.heroku.com/articles/process-model
 [buildpacks]: ../applications/using-buildpacks.md
-[dockerfile]: ../applications/using-dockerfiles.md
+[dockerfile]: ../applications/using-docker-files.md
 [docker image]: ../applications/using-docker-images.md
 [HPA]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [autoscale-algo]: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/horizontal-pod-autoscaler.md#autoscaling-algorithm

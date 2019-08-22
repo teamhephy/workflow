@@ -43,7 +43,7 @@ Learn how to deploy applications [using Buildpacks](../applications/using-buildp
 
 Dockerfiles are a powerful way to define a portable execution environment built on a base OS of your choosing.
 
-Learn how to deploy applications [using Dockerfiles](../applications/using-dockerfiles.md).
+Learn how to deploy applications [using Dockerfiles](../applications/using-docker-files.md).
 
 
 ### Docker Image

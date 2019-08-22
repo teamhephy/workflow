@@ -135,7 +135,7 @@ to external or third-party vendor services.
 [cncf]: https://cncf.io/
 [components]: components.md
 [config]: ../reference-guide/terms.md#config
-[dockerfile]: ../applications/using-dockerfiles.md
+[dockerfile]: ../applications/using-docker-files.md
 [dockerimage]: ../applications/using-docker-images.md
 [environment variables]: http://12factor.net/config
 [helm]: https://github.com/kubernetes/helm

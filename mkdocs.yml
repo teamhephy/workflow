@@ -45,7 +45,7 @@ pages:
   - Applications:
     - Deploying Apps: applications/deploying-apps.md
     - Buildpacks: applications/using-buildpacks.md
-    - Dockerfiles: applications/using-dockerfiles.md
+    - Dockerfiles: applications/using-docker-files.md
     - Docker Images: applications/using-docker-images.md
     - Managing App Processes: applications/managing-app-processes.md
     - Managing App Configuration: applications/managing-app-configuration.md
