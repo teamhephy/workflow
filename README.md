@@ -22,15 +22,21 @@
 
 [![Slack Status](https://slack.teamhephy.com/badge.svg)](https://slack.teamhephy.com/)
 
+**Hephy Workflow** is the open source fork of Deis Workflow PaaS. Some of the old documentation and README are still preserved so they may reference "Deis Workflow". Hephy Workflow is the community continuation of the Deis Workflow project after it was end-of-lifed by the Deis team which moved on to do bigger projects at Microsoft Azure.
+
 **Deis Workflow** is an open source Platform as a Service (PaaS) that adds a developer-friendly layer to any [Kubernetes][k8s-home] cluster, making it easy to deploy and manage applications.
 
 Deis Workflow is the second major release (v2) of the Deis PaaS. If you are looking for the CoreOS-based PaaS visit [https://github.com/deis/deis](https://github.com/deis/deis).
 
-To **get started** with **Deis Workflow** please read the [Quick Start Guide](https://deis.com/docs/workflow/quickstart/).
+To **get started** with **Deis Workflow** please read the [Quick Start Guide](https://docs.teamhephy.com/quickstart/).
 
-Visit [https://deis.com](https://deis.com) for more information on [why you should use Deis Workflow](https://deis.com/why-deis/) or [learn about its features](https://deis.com/how-it-works/).
+Visit [https://docs.teamhephy.com](https://docs.teamhephy.com) for project documentation and to [learn about its features and architecture](https://docs.teamhephy.com/understanding-workflow/concepts/).
 
-This repository contains the source code for Deis Workflow documentation. If you're looking for individual components, they live in their own repositories.
+Join us on [Slack](https://slack.teamhephy.com/) where we can help with issues, feature requests, and questions about running Hephy Workflow on Kubernetes on various cloud providers.
+
+Visit the community maintained [blog](https://blog.teamhephy.info/) with tips, tricks, tutorials, and announcements about Hephy Workflow.
+
+This repository contains the source code for Hephy Workflow documentation. If you're looking for individual components, they live in their own repositories.
 
 Please see below for links and descriptions of each component:
 
