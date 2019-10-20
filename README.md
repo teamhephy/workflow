@@ -1,3 +1,8 @@
+![](https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/hephy-logo-full.png)
+
+[![Slack Status](https://slack.teamhephy.com/badge.svg)](https://slack.teamhephy.com/)
+
+**Hephy Workflow** is the open source fork of Deis Workflow PaaS. Some of the old documentation and README are still preserved so they may reference "Deis Workflow". Hephy Workflow is the community continuation of the Deis Workflow project after it was end-of-lifed by the Deis team which moved on to do bigger projects at Microsoft Azure.
 
 |![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Hephy Workflow is the open source fork of Deis Workflow.<br />Please [read the announcement][] for more detail. |
 |---:|---|
@@ -17,12 +22,6 @@
 | 12/11/2017 | Team Hephy [slack community][] invites first volunteers |
 | 09/07/2017 | Deis Workflow [v2.18][] final release before entering maintenance mode |
 | 09/06/2017 | Team Hephy [slack community][] comes online |
-
-![](https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/deis_logo.png)
-
-[![Slack Status](https://slack.teamhephy.com/badge.svg)](https://slack.teamhephy.com/)
-
-**Hephy Workflow** is the open source fork of Deis Workflow PaaS. Some of the old documentation and README are still preserved so they may reference "Deis Workflow". Hephy Workflow is the community continuation of the Deis Workflow project after it was end-of-lifed by the Deis team which moved on to do bigger projects at Microsoft Azure.
 
 **Deis Workflow** is an open source Platform as a Service (PaaS) that adds a developer-friendly layer to any [Kubernetes][k8s-home] cluster, making it easy to deploy and manage applications.
 
