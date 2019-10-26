@@ -75,6 +75,13 @@ global:
   # - false: no RBAC-related manifests will be installed
   use_rbac: false
 
+  # Select API groups to use in component charts
+  #
+  # Valid values are:
+  # - apps/v1: for K8s version 1.16+ the older API group was removed, now apps/v1 is used
+  # - extensions/v1beta1: on K8s <1.12, v1 API group is not available, use this instead
+  api_group: apps/v1
+
 
 s3:
   # Your AWS access key. Leave it empty if you want to use IAM credentials.
