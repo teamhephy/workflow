@@ -70,6 +70,7 @@ DEIS_DEPLOY_HOOK_SECRET_KEY                     | a private key used to compute 
 DEIS_DEPLOY_REJECT_IF_PROCFILE_MISSING          | rejects a deploy if the previous build had a Procfile but the current deploy is missing it. A 409 is thrown in the API. Prevents accidental process types removal. (default: "false", allowed values: "true", "false")
 DEIS_DEPLOY_PROCFILE_MISSING_REMOVE             | when turned on (default) any missing process type in a Procfile compared to the previous deploy is removed. When set to false will allow an empty Procfile to go through without removing missing process types, note that new images, configs and so on will get updated on all proc types.  (default: "true", allowed values: "true", "false")
 DEIS_DEFAULT_CONFIG_TAGS                        | set tags for all applications by default, for example: '{"role": "worker"}'. (default: '')
+DEIS_IGNORE_SCHEDULING_FAILURE                  | ignore Kubernetes scheduling errors during deployments. With cluster autoscaling, scheduling errors may be temporary and should not fail the deployment (default: "false", allowed values: "true", "false").
 KUBERNETES_NAMESPACE_DEFAULT_QUOTA_SPEC         | set resource quota to application namespace by setting [ResourceQuota](http://kubernetes.io/docs/admin/resourcequota/) spec, for example: `{"spec":{"hard":{"pods":"10"}}}`, restrict app owner to spawn more then 10 pods (default: "", no quota will be applied to namespace)
 
 ### LDAP authentication settings
@@ -112,7 +113,7 @@ BACKUPS_TO_RETAIN | number of base backups the backing store should retain (defa
 
 ## Customizing Fluentd
 
-The following values can be changed in the `values.yaml` file or by using the `--set` flag with the Helm CLI. 
+The following values can be changed in the `values.yaml` file or by using the `--set` flag with the Helm CLI.
 
 Key               | Default | Description
 ------------------| --------| ---------------------------------
