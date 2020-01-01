@@ -63,6 +63,8 @@ Setting                                         | Description
 DEIS_DISABLE_CACHE                              | if set, this will disable the [slugbuilder cache][] (default: not set)
 DEIS_DEPLOY_BATCHES                             | the number of pods to bring up and take down sequentially during a scale (default: number of available nodes)
 DEIS_DEPLOY_TIMEOUT                             | deploy timeout in seconds per deploy batch (default: 120)
+DEIS_BUILDPACK_DEBUG                            | if set to True, slugbuilder will show buildpack errors if there are any (default: False)
+BUILDPACK_URL                                   | if set, it will use the custom buildpack set in this variable (default: not set)
 IMAGE_PULL_POLICY                               | the kubernetes [image pull policy][pull-policy] for application images (default: "IfNotPresent") (allowed values: "Always", "IfNotPresent")
 KUBERNETES_DEPLOYMENTS_REVISION_HISTORY_LIMIT   | how many [revisions][kubernetes-deployment-revision] Kubernetes keeps around of a given Deployment (default: all revisions)
 KUBERNETES_POD_TERMINATION_GRACE_PERIOD_SECONDS | how many seconds kubernetes waits for a pod to finish work after a SIGTERM before sending SIGKILL (default: 30)
