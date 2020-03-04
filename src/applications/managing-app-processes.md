@@ -40,7 +40,7 @@ specified in the Docker image.
 ## Declaring Process Types
 
 If you use [Buildpack][buildpacks] or [Dockerfile][dockerfile] builds and want to override or specify additional process
-types, simply include a file named `Procfile` in the root of your application's source tree.
+types, simply pass a stringified Procfile to the `--procfile` CLI option either inline or as a local file (see examples below)
 
 The format of a `Procfile` is one process type per line, with each line containing the command to invoke:
 
@@ -60,28 +60,24 @@ web: bundle exec ruby web.rb -p ${PORT:-5000}
 sleeper: sleep 900
 ```
 
-If you are using [remote Docker images][docker image], you may define process types by either running `deis pull` with a
-`Procfile` in your working directory, or by passing a stringified Procfile to the `--procfile` CLI option.
+If you are using [remote Docker images][docker image] you may also define process types by running `deis pull` while passing a stringified Procfile to the `--procfile` CLI option.
 
-For example, passing process types inline:
+Declaring process types examples
+
+*    passing process types inline:
 
 ```
 $ deis pull deis/example-go:latest --procfile="cmd: /app/bin/boot"
 ```
 
-Read a `Procfile` in another directory:
+*  Reading a `Procfile`:
 
 ```
 $ deis pull deis/example-go:latest --procfile="$(cat deploy/Procfile)"
-```
 
-Or via a Procfile located in your current, working directory:
-
-```
-$ cat Procfile
+$ cat deploy/Procfile
 cmd: /bin/boot
 sleeper: echo "sleeping"; sleep 900
-
 
 $ deis pull -a steely-mainsail deis/example-go
 Creating build... done
