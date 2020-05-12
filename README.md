@@ -1,4 +1,8 @@
-![](https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/hephy-logo-full.png)
+# Hephy Workflow
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/hephy_logo_full.png" alt="Hephy Workflow Logo"/>
+</p>
 
 [![Slack Status](https://slack.teamhephy.com/badge.svg)](https://slack.teamhephy.com/)
 
