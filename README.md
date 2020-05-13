@@ -1,7 +1,7 @@
 # Hephy Workflow
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/hephy_logo_full.png" alt="Hephy Workflow Logo"/>
+<img src="https://raw.githubusercontent.com/teamhephy/workflow/master/themes/deis/static/img/svg/hephy-logo-full.svg" alt="Hephy Workflow Logo" style="width: 100%; max-width: 450px; height: auto;"/>
 </p>
 
 [![Slack Status](https://slack.teamhephy.com/badge.svg)](https://slack.teamhephy.com/)
