@@ -73,7 +73,7 @@ global:
   # Valid values are:
   # - true: all RBAC-related manifests will be installed (in case your cluster supports RBAC)
   # - false: no RBAC-related manifests will be installed
-  use_rbac: false
+  use_rbac: true
 
 
 s3:
