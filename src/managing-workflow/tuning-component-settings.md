@@ -72,6 +72,8 @@ DEIS_DEPLOY_PROCFILE_MISSING_REMOVE             | when turned on (default) any m
 DEIS_DEFAULT_CONFIG_TAGS                        | set tags for all applications by default, for example: '{"role": "worker"}'. (default: '')
 DEIS_IGNORE_SCHEDULING_FAILURE                  | ignore Kubernetes scheduling errors during deployments. With cluster autoscaling, scheduling errors may be temporary and should not fail the deployment (default: "false", allowed values: "true", "false").
 KUBERNETES_NAMESPACE_DEFAULT_QUOTA_SPEC         | set resource quota to application namespace by setting [ResourceQuota](http://kubernetes.io/docs/admin/resourcequota/) spec, for example: `{"spec":{"hard":{"pods":"10"}}}`, restrict app owner to spawn more then 10 pods (default: "", no quota will be applied to namespace)
+DEIS_DEBUG                                      | set the log level to DEBUG
+LOG_VERBOSE                                     | activate the verbose logging formatter
 
 ### LDAP authentication settings
 
