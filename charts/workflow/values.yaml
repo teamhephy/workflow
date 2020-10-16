@@ -89,12 +89,10 @@ s3:
   builder_bucket: "your-builder-bucket-name"
 
 azure:
-  # Starting with hephy v2.22.1 only AZURE_STORAGE_CONNECTION_STRING is
-  # necesssary for the postgres wal-e db blob backups and accountname and
-  # accountkey will not be used.
-  storage_conn_string: "YOUR_AZURE_STORAGE_CONNECTION_STRING"
+  # We only support using accountname and accountkey currently for storage
   accountname: "YOUR ACCOUNT NAME"
   accountkey: "YOUR ACCOUNT KEY"
+  storage_conn_string: "YOUR_AZURE_STORAGE_CONNECTION_STRING"
   registry_container: "your-registry-container-name"
   database_container: "your-database-container-name"
   builder_container: "your-builder-container-name"
