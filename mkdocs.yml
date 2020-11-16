@@ -4,7 +4,7 @@
 #
 site_name: Deis Workflow Documentation
 site_url: https://teamhephy.com/docs/workflow
-pages:
+nav:
   - Home: index.md
   - Quick Start:
     - Overview: quickstart/index.md
