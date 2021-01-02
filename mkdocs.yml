@@ -94,6 +94,7 @@ nav:
     - Controller API v2.2: reference-guide/controller-api/v2.2.md
     - Controller API v2.3: reference-guide/controller-api/v2.3.md
   - Changelogs:
+    - v2.22.3: changelogs/v2.22.3.md
     - v2.22.2: changelogs/v2.22.2.md
     - v2.22.1: changelogs/v2.22.1.md
     - v2.22.0: changelogs/v2.22.0.md
