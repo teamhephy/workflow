@@ -10,7 +10,7 @@
 
 |![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Hephy Workflow is the open source fork of Deis Workflow.<br />Please [read the announcement][] for more detail. |
 |---:|---|
-| 01/02/2020 | Hephy Workflow [v2.22.3][] patch release |
+| 01/02/2021 | Hephy Workflow [v2.22.3][] patch release |
 | 11/15/2020 | Hephy Workflow [v2.22.2][] patch release |
 | 10/12/2020 | Hephy Workflow [v2.22.1][] patch release |
 | 10/02/2020 | Hephy Workflow [v2.22.0][] release |
