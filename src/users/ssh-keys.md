@@ -57,3 +57,33 @@ Remove keys by their name:
 $ deis keys:remove admin@plinth-23437.local
 Removing admin@plinth-23437.local SSH Key... don
 ```
+
+## Troubleshooting
+
+### Allowing Keytypes
+Latest version of openssh-client i.e 8.0 on Ubuntu Focal (20.04) and Fedora 32,33 are not accepting key types sent by severs running older version of openssh-server. This leads to autentication failure.
+
+- Check your SSH version and follow the troubleshooting steps.
+```bash
+ssh -V
+OpenSSH_8.4p1, OpenSSL 1.1.1i FIPS  8 Dec 2020
+```
+
+To Resolve this error:
+Add the following to your user’s ssh config, or global ssh config at /etc/ssh/ssh_config
+
+```bash
+PubkeyAcceptedKeyTypes +rsa-sha2-256,rsa-sha2-512
+```
+### Generating New Keys with `ed25519` algorithm as Documented on [Github](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+
+- Another workaroud is to generate a new key-pair using ed25519, this way you can still keep the id_rsa, and use it to connect to systems which don't support `ed25519` algorithm.
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+- Adding to hephy
+
+```bash
+deis keys:add your_email@example.com ~/.ssh/id_ed25519.pub
+```
