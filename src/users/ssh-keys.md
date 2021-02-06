@@ -57,3 +57,20 @@ Remove keys by their name:
 $ deis keys:remove admin@plinth-23437.local
 Removing admin@plinth-23437.local SSH Key... don
 ```
+
+## Troubleshooting
+
+Latest version of openssh-client i.e 8.0 on Ubuntu Focal (20.04) and Fedora 32,33 are not accepting key types sent by severs running older version of openssh-server. This leads to autentication failure.
+
+- Check your SSH version and follow the troubleshooting steps.
+```bash
+ssh -V
+OpenSSH_8.4p1, OpenSSL 1.1.1i FIPS  8 Dec 2020
+```
+
+To Resolve this error:
+Add the following to your user’s ssh config, or global ssh config at /etc/ssh/ssh_config
+
+```bash
+PubkeyAcceptedKeyTypes +rsa-sha2-256,rsa-sha2-512
+```
