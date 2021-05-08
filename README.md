@@ -10,6 +10,7 @@
 
 |![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/156px-Warning.svg.png) | Hephy Workflow is the open source fork of Deis Workflow.<br />Please [read the announcement][] for more detail. |
 |---:|---|
+| 05/08/2021 | Hephy Workflow [v2.23.0][] release |
 | 01/02/2021 | Hephy Workflow [v2.22.3][] patch release |
 | 11/15/2020 | Hephy Workflow [v2.22.2][] patch release |
 | 10/12/2020 | Hephy Workflow [v2.22.1][] patch release |
@@ -131,3 +132,4 @@ Then view the documentation on [http://localhost:8000](http://localhost:8000) or
 [v2.22.1]: https://github.com/teamhephy/workflow/blob/master/src/changelogs/v2.22.1.md
 [v2.22.2]: https://github.com/teamhephy/workflow/blob/master/src/changelogs/v2.22.2.md
 [v2.22.3]: https://github.com/teamhephy/workflow/blob/master/src/changelogs/v2.22.3.md
+[v2.23.0]: https://github.com/teamhephy/workflow/blob/master/src/changelogs/v2.23.0.md
