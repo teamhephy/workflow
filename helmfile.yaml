@@ -1,0 +1,16 @@
+repositories:
+- name: hephy
+  url: https://charts.teamhephy.com/
+
+helmDefaults:
+  tillerNamespace: kube-system
+  wait: false
+  timeout: 300
+  recreatePods: false
+  force: true
+
+releases:
+  - name: hephy-workflow
+    namespace: deis
+    chart: hephy/workflow
+    version: 2.23.0
