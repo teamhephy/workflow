@@ -51,12 +51,12 @@ global:
   host_port: 5555
   # Prefix for the imagepull secret created when using private registry
   secret_prefix: "private-registry"
-  # Experimental feature to use Kubernetes ingress instead of Workflow's deis-router.
+  # Feature to use Kubernetes ingress instead of Workflow's deis-router.
   #
   # Valid values are:
   # - true: deis-router will not be deployed. Workflow will not be usable until a Kubernetes ingress controller is installed.
   # - false: deis-router will be deployed (default).
-  experimental_native_ingress: false
+  native_ingress: false
   # If the Kubernetes cluster uses CNI
   # use_cni: true
   # Set the `listen` variable for registry-proxy's NGINX
