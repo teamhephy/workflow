@@ -136,6 +136,8 @@ controller:
   #
   # This will be the hostname that is used to build endpoints such as "deis.$HOSTNAME"
   platform_domain: ""
+  # Set a value for ingressClassName, if IngressClass is needed.
+  ingress_class: ""
 
 database:
   # The username and password to be used by the on-cluster database.
