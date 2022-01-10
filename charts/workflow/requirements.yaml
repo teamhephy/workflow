@@ -1,52 +1,52 @@
 dependencies:
   - name: builder
     version: <builder-tag>
-    repository: https://charts.deis.com/builder
+    repository: http://charts.teamhephy.info/builder
   - name: slugbuilder
     version: <slugbuilder-tag>
-    repository: https://charts.deis.com/slugbuilder
+    repository: http://charts.teamhephy.info/slugbuilder
   - name: dockerbuilder
     version: <dockerbuilder-tag>
-    repository: https://charts.deis.com/dockerbuilder
+    repository: http://charts.teamhephy.info/dockerbuilder
   - name: controller
     version: <controller-tag>
-    repository: https://charts.deis.com/controller
+    repository: http://charts.teamhephy.info/controller
   - name: slugrunner
     version: <slugrunner-tag>
-    repository: https://charts.deis.com/slugrunner
+    repository: http://charts.teamhephy.info/slugrunner
   - name: database
     version: <database-tag>
-    repository: https://charts.deis.com/database
+    repository: http://charts.teamhephy.info/database
   - name: fluentd
     version: <fluentd-tag>
-    repository: https://charts.deis.com/fluentd
+    repository: http://charts.teamhephy.info/fluentd
   - name: redis
     version: <redis-tag>
-    repository: https://charts.deis.com/redis
+    repository: http://charts.teamhephy.info/redis
   - name: logger
     version: <logger-tag>
-    repository: https://charts.deis.com/logger
+    repository: http://charts.teamhephy.info/logger
   - name: minio
     version: <minio-tag>
-    repository: https://charts.deis.com/minio
+    repository: http://charts.teamhephy.info/minio
   - name: monitor
     version: <monitor-tag>
-    repository: https://charts.deis.com/monitor
+    repository: http://charts.teamhephy.info/monitor
   - name: nsqd
     version: <nsqd-tag>
-    repository: https://charts.deis.com/nsqd
+    repository: http://charts.teamhephy.info/nsqd
   - name: registry
     version: <registry-tag>
-    repository: https://charts.deis.com/registry
+    repository: http://charts.teamhephy.info/registry
   - name: registry-proxy
     version: <registry-proxy-tag>
-    repository: https://charts.deis.com/registry-proxy
+    repository: http://charts.teamhephy.info/registry-proxy
   - name: registry-token-refresher
     version: <registry-token-refresher-tag>
-    repository: https://charts.deis.com/registry-token-refresher
+    repository: http://charts.teamhephy.info/registry-token-refresher
   - name: router
     version: <router-tag>
-    repository: https://charts.deis.com/router
+    repository: http://charts.teamhephy.info/router
   - name: workflow-manager
     version: <workflow-manager-tag>
-    repository: https://charts.deis.com/workflow-manager
+    repository: http://charts.teamhephy.info/workflow-manager
