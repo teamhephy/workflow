@@ -20,5 +20,6 @@ bower_components
 venv/
 
 _build/
+site/
 
 .DS_Store

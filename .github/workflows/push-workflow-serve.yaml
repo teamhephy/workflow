@@ -1,0 +1,37 @@
+name: Build docs server
+
+env:
+  PUSH_TARGET_IMG: ghcr.io/kingdonb/sites/workflow # assumed to be on GHCR, ambient credentials are used
+  PUSH_TARGET_TAG: serve # Configure what tag will push
+  BUILDDIR: ./site
+
+on:
+  push:
+    branches: [ main ] # Configure the branchs which you want to run this workflow
+
+jobs:
+  build-push:
+    name: "Build & Push docs server"
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # Checkout source code
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Login to GHCR
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # Make server with latest published artifact
+    # FIXME: this will always/occasionally pick up the "last" image published
+    # so you may need to push twice to publish a change, unless this is fixed
+    - name: Docker build and push
+      run: |
+        SITE=${PUSH_TARGET_IMG}:${PUSH_TARGET_TAG}
+        docker build -t ${SITE} .
+        docker push ${SITE}

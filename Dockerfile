@@ -1,9 +1,12 @@
-FROM python:3.10.8-alpine
+###
+FROM ghcr.io/fluxcd/flux-cli:v0.36.0 AS flux
 
-COPY . /app
-WORKDIR /app
+###
+FROM nginx:1.23.2-alpine AS server
 
-RUN pip install -r requirements.txt
+COPY --from=flux /usr/local/bin/flux /usr/local/bin/flux
 
-EXPOSE 8000
-CMD ["mkdocs", "serve", "-a", "0.0.0.0:8000"]
+RUN apk add rsync
+
+ADD _scripts/flux-pull.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/flux-pull.sh
