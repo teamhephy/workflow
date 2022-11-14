@@ -3,7 +3,6 @@ name: Build docs server
 env:
   PUSH_TARGET_IMG: ghcr.io/kingdonb/sites/workflow # assumed to be on GHCR, ambient credentials are used
   PUSH_TARGET_TAG: serve # Configure what tag will push
-  BUILDDIR: ./site
 
 on:
   push:

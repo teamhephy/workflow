@@ -71,16 +71,19 @@ jobs:
 
     # Make build published as Flux OCI artifact
     - name: Flux push
+      id: push_html
       run: |
         flux push artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} --path=$BUILDDIR \
           --source="$(git config --get remote.origin.url)" \
-          --revision="$(git tag --points-at HEAD)/$(git rev-parse HEAD)"
+          --revision="$(git tag --points-at HEAD)/$(git rev-parse HEAD)" | tee tmp-digest.out
+        DIGEST="$(grep '✔ artifact successfully pushed to' tmp-digest.out | awk '{print $6}')"
+        echo "::set-output name=digest::$DIGEST"
         flux tag artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} \
           --tag testing
 
     # Sign the docs tag with cosign (keyless/experimental)
     - name: Cosign (keyless)
-      run: cosign sign ${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }}
+      run: cosign sign $TAGS
       env:
-        TAGS: ${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }}
+        TAGS: ${{ steps.push_html.outputs.digest }}
         COSIGN_EXPERIMENTAL: true
