@@ -75,15 +75,20 @@ jobs:
       run: |
         flux push artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} --path=$BUILDDIR \
           --source="$(git config --get remote.origin.url)" \
-          --revision="$(git tag --points-at HEAD)/$(git rev-parse HEAD)" | tee tmp-digest.out
+          --revision="$(git tag --points-at HEAD)/$(git rev-parse HEAD)" 2>&1 | tee tmp-digest.out
+          # Warning: This is not stable, flux CLI output may change
+        cat tmp-digest.out
         DIGEST="$(grep '✔ artifact successfully pushed to' tmp-digest.out | awk '{print $6}')"
-        echo "::set-output name=digest::$DIGEST"
+        echo DIGEST=$DIGEST
+
+        echo "digest=$(grep '✔ artifact successfully pushed to' tmp-digest.out | awk '{print $6}')" >> $GITHUB_OUTPUT
+
         flux tag artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} \
           --tag testing
 
     # Sign the docs tag with cosign (keyless/experimental)
     - name: Cosign (keyless)
-      run: cosign sign $TAGS
+      run: cosign sign ${{ steps.push_html.outputs.digest }}
       env:
         TAGS: ${{ steps.push_html.outputs.digest }}
         COSIGN_EXPERIMENTAL: true
