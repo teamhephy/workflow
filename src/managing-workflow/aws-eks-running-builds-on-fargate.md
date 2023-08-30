@@ -1,42 +1,67 @@
-# AWS EKS: Running builds on AWS Fargate
+# AWS EKS: Running Builds on AWS Fargate
 
-EKS is AWS managed Kubernetes service. EKS can be configured to run pods of a given namespace in [Fargate](https://aws.amazon.com/fargate/), a serverless container service.
+EKS is an AWS managed Kubernetes service that can be configured to run pods of a given namespace in [Fargate](https://aws.amazon.com/fargate/), a serverless container service.
 
-This is particularly well suited to run short lived workloads such as Deis Workflow builds.
+This setup is particularly well-suited for running short-lived workloads such as Deis Workflow builds.
 
-Advantages are:
-- No need to keep a dedicated node builder around that is only used during deployments (if you use the `BUILDER_POD_NODE_SELECTOR` environment variable in the `deis-builder` pod)
-- If you are not using a dedicated node to run the builds, your builds will be ran in isolation without affecting other nodes for a very small cost
-- Because Fargate compute will be used only for a short time, it's very cheap to get a powerful instance running your builds
+Advantages of using AWS Fargate for builds are:
+
+- **No need for a dedicated node builder**: if you use the `BUILDER_POD_NODE_SELECTOR` environment variable in the `deis-builder` pod, there is no need to maintain a dedicated node builder that is only used during deployments.
+- **Isolated builds**: When not using a dedicated node for builds, your builds will run in isolation without affecting other nodes. This ensures that your builds are performed independently and efficiently.
+- **Cost-effective**: Since Fargate compute is used only for a short duration, it is very cost-effective to have a powerful instance running your builds.
 
 ## Prerequisites
 
-A running EKS cluster with deis installed and [Fargate ready to be used](https://docs.aws.amazon.com/eks/latest/userguide/fargate-profile.html).
+Before proceeding with running builds on AWS Fargate, ensure that you have the following prerequisites in place:
 
-We will assume that the Fargate profile selects pod in the `deis-builder` namespace, but you can name the namespace however you want.
+1. **Running EKS cluster**: Set up and configure an EKS cluster. Make sure it is up and running.
+2. **Deis installed**: Install Deis on your EKS cluster. Follow the appropriate documentation for Deis installation.
+3. **Fargate ready to be used**: Ensure that Fargate is properly configured and ready to be used with your EKS cluster. Refer to the [official AWS documentation](https://docs.aws.amazon.com/eks/latest/userguide/fargate-profile.html) for instructions on setting up Fargate profiles.
 
-## Create the namespace
+For the purpose of this guide, we will assume that the Fargate profile selects pods in the `deis-builder` namespace. However, you can choose any desired namespace name according to your requirements.
 
-First create the namsepace where `slugbuild` pods will run `kubectl create namespace deis-builder`
+## Create the Namespace
 
-## Making slugbuild pod run on a different namespace
+To begin, you need to create the namespace where the `slugbuild` pods will run. Run the following command to create the `deis-builder` namespace using `kubectl`:
 
-Then we must make Deis run `slugbuild` pods in the `deis-builder` namespace. There is an environment variable in the deis-builder deployment:
-
+```shell
+kubectl create namespace deis-builder
 ```
-- name: POD_NAMESPACE
-  value: deis-builder
+
+This command will create the `deis-builder` namespace in your Kubernetes cluster.
+
+## Configuring `slugbuild` Pods to Run in a different namespace
+
+To make Deis run `slugbuild` pods in the `deis-builder` namespace, you need to modify the `POD_NAMESPACE` environment variable in the `deis-builder` deployment. By default, it inherits the namespace of the deployment, but we can set it to spawn pods inside the `deis-builder` namespace.
+
+Here's an example of how to set the `POD_NAMESPACE` environment variable in the `deis-builder` deployment:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deis-builder
+  # ...
+spec:
+  template:
+    spec:
+      containers:
+        - name: deis-builder
+          # ...
+          env:
+            - name: POD_NAMESPACE
+              value: deis-builder
 ```
 
-By default, it inherits the `deis-builder` namespace. Here we are setting it to spawn pods inside the `deis-builder` namespace.
+Make sure to update the `deis-builder` deployment YAML file with the above configuration. This will ensure that the `slugbuild` pods are spawned inside the `deis-builder` namespace.
 
-## Making sure slugbuild pods have all they need in their new namespace
+## Granting Authorization for `slugbuild` Pods in the New Namespace
 
-To make sure `slugbuild` pods can run in the new namespace, we must first allow the `deis-builder` to create pod in it. This is done through RBAC authorization.
+To ensure that `slugbuild` pods can run in the new `deis-builder` namespace, you need to allow the `deis-builder` service account to create pods in that namespace. This can be achieved through RBAC (Role-Based Access Control) authorization.
 
-Create a rbac.yml file with this in it:
+Create a file named `rbac.yaml` and add the following content to it:
 
-```
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -82,18 +107,28 @@ subjects:
   namespace: deis
 ```
 
-and apply these authorizations: `kubectl apply -f rbac.yaml`
+Save the file and then apply the RBAC authorization rules using the following command:
 
-We also need to duplicate the secrets mounted in `slugbuild` pods into the new namespace. For this create a file secrets.yml with:
-
+```shell
+kubectl apply -f rbac.yaml
 ```
+
+This will grant the necessary permissions to the `deis-builder` service account in the `deis-builder` namespace.
+
+## Duplicating Secrets in the New Namespace
+
+To make the secrets available in the `deis-builder` namespace, you need to duplicate them from the default `deis` namespace. Follow these steps:
+
+1. Create a file named `secrets.yaml` and add the following content to it:
+
+```yaml
 apiVersion: v1
 data:
- builder-key: TO_REPLACE
+  builder-key: TO_REPLACE
 kind: Secret
 metadata:
- name: builder-key-auth
- namespace: deis-builder
+  name: builder-key-auth
+  namespace: deis-builder
 type: Opaque
 ---
 apiVersion: v1
@@ -123,23 +158,29 @@ metadata:
 type: Opaque
 ```
 
-Make sure to replace the TO_REPLACE placeholder with your own secrets. You can find them in the default deis namespace, for example:
+2. Replace the `TO_REPLACE` placeholders in the file with the actual values of the secrets. You can find the secrets in the default `deis` namespace using the following command:
 
-```
+```shell
 kubectl get secret builder-key-auth -n deis -o jsonpath='{.data}'
 ```
 
-You can then create the secrets in the new namespace `kubectl apply -f secrets.yaml`
+3. Apply the secrets to the new namespace using the following command:
 
-## Setting up capacity for the slugbuild pod
-
-Slugbuild pod do not have required capacity settings (CPU and memory), so by default Fargate will run them with the lowest capacities available.
-
-To change this, we must have a default capacity for all pods spawned into the `deis-builder` namespace. This is done by creating a limit range in the namespace.
-
-Create a limit_range.yml file and fill it with
-
+```shell
+kubectl apply -f secrets.yaml
 ```
+
+This will create the secrets in the `deis-builder` namespace, making them available for use by the `slugbuild` pods.
+
+## Setting Up Capacity for the `slugbuild` Pod
+
+By default, Fargate runs `slugbuild` pods with the lowest available capacities for CPU and memory. To change this behavior, you can set a default capacity for all pods spawned into the `deis-builder` namespace by creating a limit range.
+
+Follow these steps to set up the capacity for the `slugbuild` pod:
+
+1. Create a file named `limit-range.yaml` and add the following content to it:
+
+```yaml
 apiVersion: v1
 kind: LimitRange
 metadata:
@@ -148,13 +189,22 @@ metadata:
 spec:
   limits:
   - default:
-    defaultRequest:
-      memory: 32Gi
-      cpu: 16
+      defaultRequest:
+        memory: 32Gi
+        cpu: 16
     type: Container
 ```
 
-Adapt `defaultRequest` values with what you want and create the limit range: `kubectl apply -f limit-range.yml`
+2. Adjust the `defaultRequest` values (`memory` and `cpu`) according to your requirements.
+
+3. Apply the limit range to the `deis-builder` namespace using the following command:
+
+```shell
+kubectl apply -f limit-range.yaml
+```
+
+This will set the default capacity for all containers in the `deis-builder` namespace, including the `slugbuild` pods.
+
 
 ## Cleanup operator
 
@@ -175,149 +225,23 @@ args:
 
 Pods in the `deis-builder` namespace will be cleaned up automatically 2 minutes after the build complete.
 
+## Cleanup Operator for Fargate Compute
 
+When using Fargate compute for the `slugbuild` pods in the `deis-builder` namespace, the Fargate compute instances will have the same lifecycle as the pods. However, Deis does not automatically destroy the `slugbuild` pods after a deployment, which means that the Fargate compute instances won't be cleaned up automatically.
 
+To address this, you can rely on the [kube-cleanup-operator](https://github.com/lwolf/kube-cleanup-operator). You can install it using Helm and run it with the following arguments:
 
-
-
-
-
-
-
-
-
-
-
-
-When Deis Workflow runs on AWS EKS (AWS managed Kubernetes solution), it is possible to run deployment builds
-
-
-The Deis Workflow controller and all applications deployed via Workflow are intended (by default) to be accessible as subdomains of the Workflow cluster's domain.  For example, assuming `example.com` were a cluster's domain:
-
-* The controller should be accessible at `deis.example.com`
-* Applications should be accessible (by default) at `<application name>.example.com`
-
-Given that this is the case, the primary objective in configuring DNS is that traffic for all subdomains of a cluster's domain be directed to the cluster node(s) hosting the platform's router component, which is capable of directing traffic within the cluster to the correct endpoints.
-
-
-## With a Load Balancer
-
-Generally, it is recommended that a [load balancer][] be used to direct inbound traffic to one or more routers.  In such a case, configuring DNS is as simple as defining a wildcard record in DNS that points to the load balancer.
-
-For example, assuming a domain of `example.com`:
-
-* An `A` record enumerating each of your load balancer(s) IPs (i.e. DNS round-robining)
-* A `CNAME` record referencing an existing fully-qualified domain name for the load balancer
-    * Per [AWS' own documentation][AWS recommends], this is the recommended strategy when using AWS Elastic Load Balancers, as ELB IPs may change over time.
-
-DNS for any applications using a "custom domain" (a fully-qualified domain name that is not a subdomain of the cluster's own domain) can be configured by creating a `CNAME` record that references the wildcard record described above.
-
-Although it is dependent upon your distribution of Kubernetes and your underlying infrastructure, in many cases, the IP(s) or existing fully-qualified domain name of a load balancer can be determined directly using the `kubectl` tool:
-
-```
-$ kubectl --namespace=deis describe service deis-router | grep "LoadBalancer Ingress"
-LoadBalancer Ingress:	a493e4e58ea0511e5bb390686bc85da3-1558404688.us-west-2.elb.amazonaws.com
+```yaml
+args:
+  - --namespace=deis-builder
+  - --delete-successful-after=0
+  - --delete-failed-after=120m
+  - --delete-pending-pods-after=0
+  - --delete-evicted-pods-after=0
+  - --delete-orphaned-pods-after=2m
+  - --legacy-mode=false
 ```
 
-The `LoadBalancer Ingress` field typically describes an existing domain name or public IP(s).  Note that if Kubernetes is able to automatically provision a load balancer for you, it does so asynchronously.  If the command shown above is issued very soon after Workflow installation, the load balancer may not exist yet.
+With these arguments, the kube-cleanup-operator will automatically clean up pods in the `deis-builder` namespace based on the specified time intervals. In this case, pods will be cleaned up 2 minutes after the build completes.
 
-## Without a Load Balancer
-
-On some platforms (Minikube, for instance), a load balancer is not an easy or practical thing to provision. In these cases, one can directly identify the public IP of a Kubernetes node that is hosting a router pod and use that information to configure the local `/etc/hosts` file.
-
-Because wildcard entries do not work in a local `/etc/hosts` file, using this strategy may result in frequent editing of that file to add fully-qualified subdomains of a cluster for each application added to that cluster.  Because of this a more viable option may be to utilize the [xip.io][xip] service.
-
-In general, for any IP, `a.b.c.d`, the fully-qualified domain name `any-subdomain.a.b.c.d.xip.io` will resolve to the IP `a.b.c.d`.  This can be enormously useful.
-
-To begin, find the node(s) hosting router instances using `kubectl`:
-
-```
-$ kubectl --namespace=deis describe pod deis-router | grep Node
-Node:       ip-10-0-0-199.us-west-2.compute.internal/10.0.0.199
-Node:       ip-10-0-0-198.us-west-2.compute.internal/10.0.0.198
-```
-
-The command will display information for every router pod.  For each, a node name and IP are displayed in the `Node` field.  If the IPs appearing in these fields are public, any of these may be used to configure your local `/etc/hosts` file or may be used with [xip.io][xip].  If the IPs shown are not public, further investigation may be needed.
-
-You can list the IP addresses of a node using `kubectl`:
-
-```
-$ kubectl describe node ip-10-0-0-199.us-west-2.compute.internal
-# ...
-Addresses:	10.0.0.199,10.0.0.199,54.218.85.175
-# ...
-```
-
-Here, the `Addresses` field lists all the node's IPs.  If any of them are public, again, they may be used to configure your local `/etc/hosts` file or may be used with [xip.io][xip].
-
-## Tutorial: Configuring DNS with [Google Cloud DNS][cloud dns]
-
-In this section, we'll describe how to configure Google Cloud DNS for routing your domain name to your Deis cluster.
-
-We'll assume the following in this section:
-
-- Your Deis router service has a load balancer in front of it.
-  - The load balancer need not be cloud based, it just needs to provide a stable IP address or a stable domain name
-- You have the `mystuff.com` domain name registered with a registrar
-  - Replace your domain name with `mystuff.com` in the instructions to follow
-- Your registrar lets you alter the nameservers for your domain name (most registrars do)
-
-Here are the steps for configuring cloud DNS to route to your deis cluster:
-
-1. Get the load balancer IP or domain name
-  - If you are on Google Container Engine, you can run `kubectl get svc deis-router` and look for the `LoadBalancer Ingress` column to get the IP address
-2. Create a new Cloud DNS Zone (on the console: `Networking` => `Cloud DNS`, then click on `Create Zone`)
-3. Name your zone, and set the DNS name to `mystuff.com.` (note the `.` at the end
-4. Click on the `Create` button
-5. Click on the `Add Record Set` button on the resulting page
-6. If your load balancer provides a stable IP address, enter the following fields in the resulting form:
-  1. `DNS Name`: `*`
-  2. `Resource Record Type`: `A`
-  3. `TTL`: the DNS TTL of your choosing. If you're testing or you anticipate that you'll tear down and rebuild many deis clusters over time, we recommend a low TTL
-  4. `IPv4 Address`: The IP that you got in the very first step
-  5. Click the `Create` button
-7. If your load balancer provides the stable domain name `lbdomain.com`, enter the following fields in the resulting form:
-  1. `DNS Name`: `*`
-  2. `Resource Record Type`: `CNAME`
-  3. `TTL`: the DNS TTL of your choosing. If you're testing or you anticipate that you'll tear down and rebuild many deis clusters over time, we recommend a low TTL
-  4. `Canonical name`: `lbdomain.com.` (note the `.` a the end)
-  5. Click on the `Create` button
-8. In your domain registrar, set the nameservers for your `mystuff.com` domain to the ones under the `data` column in the `NS` record on the same page. They'll often be something like the below (note the trailing `.` characters).
-
-  ```
-  ns-cloud-b1.googledomains.com.
-  ns-cloud-b2.googledomains.com.
-  ns-cloud-b3.googledomains.com.
-  ns-cloud-b4.googledomains.com.
-  ```
-
-
-Note: If you ever have to re-create your deis cluster, simply go back to step 6.4 or 7.4 (depending on your load balancer) and change the IP address or domain name to the new value. You may have to wait for the TTL you set to expire.
-
-
-## Testing
-
-To test that traffic reaches its intended destination, a request can be
-sent to the Deis controller like so (do not forget the trailing slash!):
-
-```
-curl http://deis.example.com/v2/
-```
-
-Or:
-
-```
-curl http://deis.54.218.85.175.xip.io/v2/
-```
-
-
-Since such requests require authentication, a response such as the following should be considered an indicator of success:
-
-```
-{"detail":"Authentication credentials were not provided."}
-```
-
-[AWS recommends]: https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html
-[load balancer]: configuring-load-balancers.md
-[xip]: http://xip.io/
-[cloud dns]: https://cloud.google.com/dns/docs
+Please note that you need to install the kube-cleanup-operator using Helm and provide the appropriate values for the arguments mentioned above.
