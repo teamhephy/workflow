@@ -206,25 +206,6 @@ kubectl apply -f limit-range.yaml
 This will set the default capacity for all containers in the `deis-builder` namespace, including the `slugbuild` pods.
 
 
-## Cleanup operator
-
-Fargate computes will have the same lifecycle than the pods in the `deis-builder` namespace. Deis doesn't destroy `slugbuild` pods after a deployment, that means that fargate compute won't be automatically cleaned up.
-
-To fix this, we can rely on the `[kube-cleanup-operator](https://github.com/lwolf/kube-cleanup-operator)`. You can install it with `helm` and run it with these argument:
-
-```
-args:
-  - --namespace=deis-builder
-  - --delete-successful-after=0
-  - --delete-failed-after=120m
-  - --delete-pending-pods-after=0
-  - --delete-evicted-pods-after=0
-  - --delete-orphaned-pods-after=2m
-  - --legacy-mode=false
-```
-
-Pods in the `deis-builder` namespace will be cleaned up automatically 2 minutes after the build complete.
-
 ## Cleanup Operator for Fargate Compute
 
 When using Fargate compute for the `slugbuild` pods in the `deis-builder` namespace, the Fargate compute instances will have the same lifecycle as the pods. However, Deis does not automatically destroy the `slugbuild` pods after a deployment, which means that the Fargate compute instances won't be cleaned up automatically.
