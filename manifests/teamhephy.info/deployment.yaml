@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workflow-docs
+spec:
+  selector:
+    matchLabels:
+      app: workflow-docs-nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: workflow-docs-nginx
+    spec:
+      initContainers:
+      - name: flux-pull
+        image: ghcr.io/kingdonb/sites/workflow:serve
+        imagePullPolicy: Always
+        command:
+          - "/usr/local/bin/flux-pull.sh"
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: html
+      containers:
+      - name: nginx
+        image: ghcr.io/kingdonb/sites/workflow:serve # build
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: html
+      volumes:
+      - name: html
+        emptyDir:
+          sizeLimit: 100Mi

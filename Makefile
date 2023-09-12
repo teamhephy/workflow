@@ -53,3 +53,6 @@ docker-serve:
 	${DEV_ENV_CMD} ${IMAGE} $(MKDOCSSERVE)
 
 run: docker-build docker-serve
+
+pull:
+	flux pull artifact oci://ghcr.io/kingdonb/sites/workflow:testing --output ./

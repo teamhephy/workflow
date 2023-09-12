@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: workflow-docs
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: production-letsencrypt
+spec:
+  ingressClassName: public
+  rules:
+  - host: docs.teamhephy.info
+    http:
+      paths:
+      - path: /()(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: workflow-docs
+            port:
+              number: 80
+      - path: /workflow/docs(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: workflow-docs
+            port:
+              number: 80
+  - host: teamhephy.info
+    http:
+      paths:
+      - path: /()(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: workflow-docs
+            port:
+              number: 80
+      - path: /workflow/docs(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: workflow-docs
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - teamhephy.info
+    - docs.teamhephy.info
+    secretName: workflow-docs

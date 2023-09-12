@@ -1,0 +1,94 @@
+name: Build documentation (tag)
+
+env:
+  PIP_CACHE_DIR: .pip # Configure the PIP cache directory
+  PUSH_TARGET: ghcr.io/kingdonb/sites/workflow # assumed to be on GHCR, ambient credentials are used
+  BUILDDIR: ./site
+
+on:
+  push:
+    # paths: [ src/**.md ] # Only trigger workflow when there are changes on docs
+    # branches: [ main ] # Configure the branchs which you want to run this workflow
+    tags: [ "*" ]
+
+jobs:
+  build-push:
+    permissions:
+      packages: write
+      id-token: write # needed for signing the images with GitHub OIDC Token **not production ready**
+
+    name: "Build & Push docs"
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # Checkout source code
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Use Flux to publish mkdocs build output as OCI
+    - name: Setup Flux CLI
+      uses: fluxcd/flux2/action@main
+
+    # Use Cosign to sign and verify site content as OCI
+    - name: Install Cosign
+      uses: sigstore/cosign-installer@main
+
+    # Cache mkdocs dependencies for faster build time
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ./.pip
+        key: ${{ runner.os }}-modules-${{ hashFiles('./requirements.txt') }}
+
+    # Install dependencies for build process
+    - name: Install build dependencies
+      run: |
+        make deps
+
+    # Build docs
+    - name: Build mkdocs
+      run: |
+        make build BUILDDIR=$BUILDDIR
+
+    # Use docker/metadata-action eventually (not used for now)
+    - id: docker_meta
+      uses: docker/metadata-action@v4.1.1
+      with:
+        images: ${{ env.PUSH_TARGET }}
+        tags: |
+          type=sha,format=long
+          type=semver,pattern={{version}}
+        #,value=v1.0.0
+
+    - name: Login to GHCR
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # Make build published as Flux OCI artifact
+    - name: Flux push
+      id: push_html
+      run: |
+        flux push artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} --path=$BUILDDIR \
+          --source="$(git config --get remote.origin.url)" \
+          --revision="$(git tag --points-at HEAD)/$(git rev-parse HEAD)" 2>&1 | tee tmp-digest.out
+          # Warning: This is not stable, flux CLI output may change
+        cat tmp-digest.out
+        DIGEST="$(grep '✔ artifact successfully pushed to' tmp-digest.out | awk '{print $6}')"
+        echo DIGEST=$DIGEST
+
+        echo "digest=$(grep '✔ artifact successfully pushed to' tmp-digest.out | awk '{print $6}')" >> $GITHUB_OUTPUT
+
+        flux tag artifact oci://${{ env.PUSH_TARGET }}:${{ steps.docker_meta.outputs.version }} \
+          --tag testing
+
+    # Sign the docs tag with cosign (keyless/experimental)
+    - name: Cosign (keyless)
+      run: cosign sign ${{ steps.push_html.outputs.digest }}
+      env:
+        TAGS: ${{ steps.push_html.outputs.digest }}
+        COSIGN_EXPERIMENTAL: true
