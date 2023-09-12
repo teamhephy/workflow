@@ -67,6 +67,21 @@ global:
   #
   # In case of CNI you can not use `hostPort` notation due to https://github.com/kubernetes/kubernetes/issues/23920
   # registry_proxy_bind_addr: "80"
+  # Clusters with large nodes (24 CPU+) may need to lower or tune the number of GUNICORN_WORKERS.
+  #
+  # Default value is based on your number of CPUs:
+  # - (os.cpu_count() or 4) * 4 + 1
+  # This setting probably should not be higher than max_connections which defaults to 100
+  # gunicorn_workers: 33
+  # If there are enough gunicorn workers to use up max_connections, you may also want to reduce CONN_MAX_AGE
+  # so health checks time out their connection faster and don't use all available connections
+  #
+  # Valid values are a number of seconds, or 0 to disable persistent connections.
+  # Setting the value to "None" will ensure that connections are never timed out.
+  # - 0
+  # - 600
+  # - "None"
+  # conn_max_age: 600
 
   # Enable usage of RBAC authorization mode
   #
