@@ -33,7 +33,7 @@ dependencies:
     version: 2.11.5
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: nsqd
-    version: 2.5.2
+    version: 2.5.3
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: registry
     version: 2.6.2
