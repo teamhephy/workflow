@@ -10,7 +10,7 @@ dependencies:
   version: 2.8.4
 - name: controller
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
-  version: 2.22.1
+  version: 2.22.2
 - name: slugrunner
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.7.1
@@ -50,5 +50,5 @@ dependencies:
 - name: workflow-manager
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.6.3
-digest: sha256:21ccb9a681478a021c55e683dce33d175aeaffb9bb9f1f31360bb5332397f31d
-generated: "2023-09-26T13:51:34.511804-04:00"
+digest: sha256:297ed1ab137cada1f615c8e8e5c3127f2d89d74aedf4621db7b1e13a079f1dc4
+generated: "2023-09-26T15:43:57.789704-04:00"
