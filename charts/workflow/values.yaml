@@ -154,10 +154,10 @@ database:
 
 redis:
   # Configure the following ONLY if using an off-cluster Redis instance for logger
-  db: "0"
-  host: "redis host"
-  port: "redis port"
-  password: "redis password" # "" == no password
+  # db: "0"
+  # host: "redis host"
+  # port: "redis port"
+  # password: "redis password" # "" == no password
 
 fluentd:
   syslog:
