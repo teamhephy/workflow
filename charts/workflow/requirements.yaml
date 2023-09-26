@@ -21,7 +21,7 @@ dependencies:
     version: 2.15.2
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: redis
-    version: 2.4.3
+    version: 2.4.4
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: logger
     version: 2.5.2
@@ -45,7 +45,7 @@ dependencies:
     version: 1.2.3
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: router
-    version: 2.19.1
+    version: 2.19.2
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: workflow-manager
     version: 2.6.3
