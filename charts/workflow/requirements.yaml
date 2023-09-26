@@ -1,6 +1,6 @@
 dependencies:
   - name: builder
-    version: 2.13.8
+    version: 2.13.9
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: slugbuilder
     version: 2.8.1

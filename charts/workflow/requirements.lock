@@ -1,7 +1,7 @@
 dependencies:
 - name: builder
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
-  version: 2.13.8
+  version: 2.13.9
 - name: slugbuilder
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.8.1
@@ -50,5 +50,5 @@ dependencies:
 - name: workflow-manager
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.6.3
-digest: sha256:1ffa48d516442974cf7023b5a9bc69006e03d5e888f82073e454754824862143
-generated: "2023-09-26T13:49:25.230105-04:00"
+digest: sha256:21ccb9a681478a021c55e683dce33d175aeaffb9bb9f1f31360bb5332397f31d
+generated: "2023-09-26T13:51:34.511804-04:00"
