@@ -1,7 +1,60 @@
+apiVersion: v2
 name: workflow
 home: https://github.com/teamhephy/workflow
-version: 2.23.10
+version: 2.23.11
 description: Hephy Workflow
 maintainers:
-  - name: Team Hephy
-    email: team@teamhephy.com
+- name: Team Hephy
+  email: team@teamhephy.com
+dependencies:
+  - name: builder
+    version: 2.13.10
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: slugbuilder
+    version: 2.8.2
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: dockerbuilder
+    version: 2.8.5
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: controller
+    version: 2.22.3
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: slugrunner
+    version: 2.7.2
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: database
+    version: 2.7.8
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: fluentd
+    version: 2.15.3
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: redis
+    version: 2.4.5
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: logger
+    version: 2.5.3
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: minio
+    version: 2.4.7
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: monitor
+    version: 2.11.6
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: nsqd
+    version: 2.5.4
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: registry
+    version: 2.6.3
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: registry-proxy
+    version: 1.5.3
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: registry-token-refresher
+    version: 1.2.4
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: router
+    version: 2.19.4
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
+  - name: workflow-manager
+    version: 2.6.4
+    repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
