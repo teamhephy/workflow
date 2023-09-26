@@ -152,7 +152,7 @@ database:
     host: "database host"
     port: "database port"
 
-redis:
+redis: {}
   # Configure the following ONLY if using an off-cluster Redis instance for logger
   # db: "0"
   # host: "redis host"
