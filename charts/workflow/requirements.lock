@@ -31,7 +31,7 @@ dependencies:
   version: 2.4.6
 - name: monitor
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
-  version: 2.11.4
+  version: 2.11.5
 - name: nsqd
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.5.2
@@ -50,5 +50,5 @@ dependencies:
 - name: workflow-manager
   repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   version: 2.6.3
-digest: sha256:1f2db7e20aa305a08572cbade6f43679a014b65b5820de6f1ee52f27cedaefd6
-generated: "2023-09-26T13:12:56.014731-04:00"
+digest: sha256:6ce4e1a9b89e87bab9275d96ccb29ac6d505d627ced997d5da14d5fd49513fd2
+generated: "2023-09-26T13:23:09.829748-04:00"

@@ -30,7 +30,7 @@ dependencies:
     version: 2.4.6
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: monitor
-    version: 2.11.4
+    version: 2.11.5
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: nsqd
     version: 2.5.2
