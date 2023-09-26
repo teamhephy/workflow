@@ -1,6 +1,6 @@
 name: workflow
 home: https://github.com/teamhephy/workflow
-version: <Will be populated by the ci before publishing the chart>
+version: 2.23.1
 description: Hephy Workflow
 maintainers:
   - name: Team Hephy
