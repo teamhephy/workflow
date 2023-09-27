@@ -1,7 +1,7 @@
 apiVersion: v2
 name: workflow
 home: https://github.com/teamhephy/workflow
-version: 2.23.11
+version: 2.23.12
 description: Hephy Workflow
 maintainers:
 - name: Team Hephy
@@ -41,7 +41,7 @@ dependencies:
     version: 2.11.6
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: nsqd
-    version: 2.5.4
+    version: 2.5.5
     repository: oci://ghcr.io/kingdonb/hephy-workflow-beta
   - name: registry
     version: 2.6.3
